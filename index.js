@@ -7,11 +7,11 @@ app.use(express.json());
 
 //Database Connection
 const pool = new Pool({
-  user: "",
+  user: "postgres",
   host: "localhost",
-  database: "",
-  password: "",
-  port: "",
+  database: "tasks_db",
+  password: "tasks123",
+  port: "5432",
 });
 
 //Create Table Function
@@ -93,6 +93,9 @@ app.delete("/tasks/:id", async (request, response) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+//Initialize databse, start server
+createTasksTable().then(() =>
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  })
+);
